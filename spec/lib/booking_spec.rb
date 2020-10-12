@@ -25,7 +25,8 @@ RSpec.describe Booking do
     context 'when show is invalid then set valid show which is sold out' do
       it 'should get error like show is not available' do
         booking = Booking.new(show, show, show)
-        booking.stub(:gets).and_return("5\n", '1', 'B7')
+        # booking.stub(:gets).and_return("5\n", '1', 'B7')
+        allow(booking).to receive(:gets).and_return("5\n", '1', 'B7')
         expect(STDOUT).to receive(:puts).with('Input:')
         expect(STDOUT).to receive(:puts).with('Please select valid audi number 1, 2, or 3')
         expect(STDOUT).to receive(:puts).with("B7 Not available, Please select different seats\n\n")
@@ -37,7 +38,8 @@ RSpec.describe Booking do
     context 'when show is invalid then set valid show which is sold out' do
       it 'should not get any error when show is available' do
         booking = Booking.new(show, show, show)
-        booking.stub(:gets).and_return("5\n", '1', 'A1')
+        # booking.stub(:gets).and_return("5\n", '1', 'A1')
+        allow(booking).to receive(:gets).and_return("5\n", '1', 'A1')
         expect(STDOUT).to receive(:puts).with('Input:')
         expect(STDOUT).to receive(:puts).with('Please select valid audi number 1, 2, or 3')
         expect_any_instance_of(Payment).to receive(:seat_booking).with(1)
