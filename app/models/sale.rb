@@ -2,10 +2,11 @@ class Sale
   attr_accessor :revenue, :service_tax, :swachh_bharat_cess, :krishi_kalyan_cess
 
   @@total_sales = []
-  def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
-    end
+  def initialize(revenue:, service_tax:, swachh_bharat_cess:, krishi_kalyan_cess:)
+    @revenue = revenue
+    @service_tax = service_tax
+    @swachh_bharat_cess = swachh_bharat_cess
+    @krishi_kalyan_cess = krishi_kalyan_cess
   end
 
   def self.create(attributes)

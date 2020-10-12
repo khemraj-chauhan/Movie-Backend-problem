@@ -128,4 +128,5 @@ booking.select_audi_and_seat
 booking.select_audi_and_seat
 booking.sales_report
 
+
 # TO RUN this from termial use the command - rails r 'lib/booking.rb'
