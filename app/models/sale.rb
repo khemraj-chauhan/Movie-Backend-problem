@@ -7,10 +7,7 @@ class Sale
     @service_tax = service_tax
     @swachh_bharat_cess = swachh_bharat_cess
     @krishi_kalyan_cess = krishi_kalyan_cess
-  end
-
-  def self.create(attributes)
-    @@total_sales << self.new(attributes)
+    @@total_sales << self
   end
 
   def self.total_sales_details
