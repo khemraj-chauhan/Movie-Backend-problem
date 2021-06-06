@@ -62,6 +62,7 @@ class Booking
 
   def seat_availabilty(selected_seats, audi)
     input_seats = selected_seats.split(',').map(&:strip)
+    return if duplicate_seat_selected?(input_seats)
     available_and_bookable = find_all_available_and_bookable_seats(input_seats, audi)
     sold_out_seats = input_seats - available_and_bookable[:available_seats].map(&:seat_number)
     if sold_out_seats.present?
@@ -69,6 +70,12 @@ class Booking
       return
     end
     Payment.new(available_and_bookable[:bookable_seat]).seat_booking(audi.to_i)
+  end
+
+  def duplicate_seat_selected?(input_seats)
+    return if input_seats.uniq.count.eql?(input_seats.count)
+    puts "Duplicate seat selection is not allowed\n\n"
+    true
   end
 
   def find_all_available_and_bookable_seats(input_seats, audi)

@@ -22,10 +22,9 @@ RSpec.describe Booking do
   end
 
   describe '#select_audi_and_seat' do
-    context 'when show is invalid then set valid show which is sold out' do
-      it 'should get error like show is not available' do
+    context 'when selected show is invalid then set valid show which is sold out' do
+      it 'should get error message like show is not available' do
         booking = Booking.new(show, show, show)
-        # booking.stub(:gets).and_return("5\n", '1', 'B7')
         allow(booking).to receive(:gets).and_return("5\n", '1', 'B7')
         expect(STDOUT).to receive(:puts).with('Input:')
         expect(STDOUT).to receive(:puts).with('Please select valid audi number 1, 2, or 3')
@@ -35,14 +34,24 @@ RSpec.describe Booking do
       end
     end
 
-    context 'when show is invalid then set valid show which is sold out' do
+    context 'when selected show is invalid then set valid show which is sold out' do
       it 'should not get any error when show is available' do
         booking = Booking.new(show, show, show)
-        # booking.stub(:gets).and_return("5\n", '1', 'A1')
         allow(booking).to receive(:gets).and_return("5\n", '1', 'A1')
         expect(STDOUT).to receive(:puts).with('Input:')
         expect(STDOUT).to receive(:puts).with('Please select valid audi number 1, 2, or 3')
         expect_any_instance_of(Payment).to receive(:seat_booking).with(1)
+
+        booking.select_audi_and_seat
+      end
+    end
+
+    context 'when selected show is valid but duplicate seat selected' do
+      it 'should get error message to correct it' do
+        booking = Booking.new(show, show, show)
+        allow(booking).to receive(:gets).and_return('1', 'B1, B1')
+        expect(STDOUT).to receive(:puts).with('Input:')
+        expect(STDOUT).to receive(:puts).with("Duplicate seat selection is not allowed\n\n")
 
         booking.select_audi_and_seat
       end
